@@ -5,12 +5,10 @@ import machine.model.*;
 public class Controller {
 
     private final Machine machine = Machine.getInstance(400, 540, 120, 9, 550);
-    private final View view;
     private boolean isFinished = false;
 
 
-    public Controller(View view) {
-        this.view = view;
+    public Controller() {
     }
 
     public void chooseAction() {
@@ -100,32 +98,6 @@ public class Controller {
     private void withdrawCash() {
         int withdrawn = machine.withdraw();
         Console.writeLine(String.format("I gave you $%d", withdrawn));
-    }
-
-    public void requireIngredientsAmount() {
-        Console.writeLine("Write how many ml of water the coffee machine has:");
-        int waterAmount = Console.readInt();
-        Console.writeLine("Write how many ml of milk the coffee machine has:");
-        int milkAmount = Console.readInt();
-        Console.writeLine("Write how many grams of coffee beans the coffee machine has:");
-        int coffeeAmount = Console.readInt();
-        Console.writeLine("Write how many cups of coffee you will need: ");
-        int cupsAmount = Console.readInt();
-
-        Console.writeLine(getCupsAvailable(waterAmount, milkAmount, coffeeAmount, cupsAmount));
-    }
-
-    private String getCupsAvailable(int water, int milk, int coffee, int cups) {
-        int cupsAvailable = Math.min(Math.min(water / calculateWater(new Cappuccino(), 1), milk / calculateMilk(new Cappuccino(), 1)),
-                coffee / calculateCoffee(new Cappuccino(), 1));
-
-        if (cupsAvailable < cups) {
-            return String.format("No, I can make only %d cup(s) of coffee", cupsAvailable);
-        } else if (cupsAvailable > cups) {
-            return String.format("Yes, I can make that amount of coffee (and even %d more than that)", cupsAvailable - cups);
-        }
-
-        return "Yes, I can make that amount of coffee";
     }
 
     private int calculateWater(CoffeeCup coffeeCup, int cupsAmount) {

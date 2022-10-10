@@ -1,12 +1,10 @@
 package machine;
 
 public class CoffeeMachine {
-    private final View view;
     private final Controller controller;
 
     public CoffeeMachine() {
-        this.view = new View();
-        this.controller = new Controller(view);
+        this.controller = new Controller();
     }
 
     public void run() {
